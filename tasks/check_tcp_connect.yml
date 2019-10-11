@@ -1,0 +1,22 @@
+
+---
+- hosts: 10.6.221.204
+  tasks:
+
+    - wait_for: host=10.6.0.75 port=514 timeout=1
+    - debug: msg="ok to 10.6.0.75:514"
+
+    - wait_for: host=10.253.217.242 port=20514 timeout=1
+    - debug: msg="ok access to 10.253.217.242:20514"
+
+    - wait_for: host=10.6.193.84 port=514 timeout=1
+      check_mode: no
+      failed_when: false
+      changed_when: false
+      register: tcp_status
+
+    - name: debug_msg
+      debug: 
+        var: tcp_status
+
+

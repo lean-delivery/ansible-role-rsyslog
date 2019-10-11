@@ -1,0 +1,70 @@
+# main.yml
+---
+
+- name: Great_scenario
+  hosts: all
+  user: ansible
+  become: yes
+  become_method: sudo
+#  gather_facts: False
+
+  tasks:
+
+# проверка ос
+   - include: /var/lib/deploy/audit_role/tasks/check_os_task.yml
+
+# установка моих пакетов ( nano \ tcpdump \ nc \ и т.д.)
+   - include: /var/lib/deploy/audit_role/tasks/add_my_package.yml
+
+# проверка версии rsyslog для серверов на CentOS параметр rsyslog_installed - значить установлен
+   - include: /var/lib/deploy/audit_role/tasks/check_rsyslog_rpm_task.yml
+     when: ansible_distribution == "CentOS"
+
+# проверка что rsyslog запущен для CentOS
+   - include: /var/lib/deploy/audit_role/tasks/check_rsyslog_systemctl_task.yml
+     when: ansible_distribution == "CentOS"
+
+# проверка что config rsyslog нормальный и рабочий
+   - include: /var/lib/deploy/audit_role/tasks/check_rsyslog_config.yml
+     when: ansible_distribution == "CentOS"
+
+# проверка что SeLinux запущен в Enforce
+   - include: /var/lib/deploy/audit_role/tasks/check_status_selinux.yml
+     when: ansible_distribution == "CentOS"
+
+# проверка версии auditd
+   - include: /var/lib/deploy/audit_role/tasks/check_audit_rpm_task.yml
+     when: ansible_distribution == "CentOS"
+
+# установка rsyslog нашей версии если его нет или версия ниже
+   - include: /var/lib/deploy/audit_role/tasks/install_rsyslog_task.yml
+     when: ansible_distribution == "CentOS" and (not 'rsyslog' in rsyslog_rpm.stdout)
+
+# проверка что config rsyslog нормальный и рабочий - после установки
+   - include: /var/lib/deploy/audit_role/tasks/check_rsyslog_config.yml
+     when: ansible_distribution == "CentOS"
+
+# копирование конфигов rsyslog (и restart) если есть ошибки в конфиге rsysloga 
+   - include: /var/lib/deploy/audit_role/tasks/copy_rsyslog_config.yml
+     when: "'error during parsing file' in rsyslog_config_status.stderr"
+
+# доставка audiSP
+   - include: /var/lib/deploy/audit_role/tasks/install_audiSP_task.yml
+     when: ansible_distribution == "CentOS"
+
+# доставка правил аудит-д
+   - include: /var/lib/deploy/audit_role/tasks/install_auditd_task.yml
+     when: ansible_distribution == "CentOS"
+
+# проверка что auditd -иммутэйбил (имеет в конце конфига правил строку -e 2)
+   - include: /var/lib/deploy/audit_role/tasks/check_auditd_rules.yml
+     when: ansible_distribution == "CentOS"
+
+# инфа что нужно заребутить сервер
+   - name: Please restart server for accept auditd.rules
+     check_mode: no
+     failed_when: false
+     changed_when: false
+     debug:
+       msg: "****Please restart server for accept auditd.rules (-e 2)****** {{ansible_hostname}} ip {{inventory_hostname}}"
+     when: auditd_e_status == 0

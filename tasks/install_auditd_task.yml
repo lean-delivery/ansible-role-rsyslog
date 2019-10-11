@@ -1,0 +1,24 @@
+---
+
+  - name: COPY_auditd_conf
+    copy:
+       src: /var/lib/deploy/audit_role/templates/auditd.conf
+       dest: /etc/audit/auditd.conf
+  - name: COPY_auditd_rules
+    copy:
+       src: /var/lib/deploy/audit_role/templates/audit.rules
+       dest: /etc/audit/rules.d/audit.rules
+
+  - command: service auditd stop
+  - name: Restarting auditd
+    service: name=auditd state=started use=service
+    register: result_auditd_status
+
+
+  - name: Report auditd Status
+    debug:
+      var: result_auditd_status
+
+
+
+

@@ -1,0 +1,17 @@
+[test_group]
+#localhost ansible_connection=local
+
+
+10.6.221.204
+
+[all]
+10.6.221.204
+
+
+
+[web]
+#192.168.56.102
+
+[test_group:vars]
+ansible_user=ansible
+ansible_port=22

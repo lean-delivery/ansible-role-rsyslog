@@ -1,0 +1,39 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          go-audit
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:
+# Should-Start:
+# Default-Start:     2 3 4 5
+# Default-Stop:
+# Short-Description: go-audit init.d
+### END INIT INFO
+
+
+case "$1" in
+'start')
+        ulimit -n 10000
+        go-audit -config /etc/go-audit.d/go-audit.yaml \
+        > /var/log/go-audit.log 2>&1 &
+        echo $! > /var/run/go-audit.pid
+        ;;
+
+'stop')
+        if [ -f /var/run/go-audit.pid ]; then
+            kill $(cat /var/run/go-audit.pid)
+            rm /var/run/go-audit.pid
+            auditctl -D
+        fi
+        ;;
+
+'restart')
+        $0 stop
+        $0 start
+        ;;
+
+*)
+        echo "Usage: $0 { start | stop | restart }"
+        exit 1
+        ;;
+esac
+exit 0

@@ -1,0 +1,19 @@
+
+---
+
+  - name: Check auditd config
+    command: auditctl -l | grep "-e 2"
+    check_mode: no
+    failed_when: false
+    changed_when: false
+    register: auditd_e_status
+
+  - name: Report status of config auditd
+    debug:
+      var: auditd_e_status
+
+#      msg: "rsyslog is {{ (rsyslog_status.rc == 0) | ternary('Up', 'Down') }}"
+
+
+
+

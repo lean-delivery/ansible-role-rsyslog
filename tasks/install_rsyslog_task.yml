@@ -1,0 +1,23 @@
+# install_rsyslog_task.yml
+---
+
+  - name: Install_rsyslog
+    yum:
+#      name: rsyslog-8.24.0-41.el7_7.x86_64
+      name: rsyslog
+      state: latest
+      enablerepo: base      
+
+  - name: Report status install of rsyslog
+    debug:
+      var: rsyslog_instaled
+
+
+#  - name: COPY_rsyslog.conf
+#    copy:
+#       src: /var/lib/deploy/audit_role/templates/rsyslog_clean.conf
+#       dest: /etc/rsyslog.conf
+#
+#  - name: Restarting rsyslog
+#    service: name=rsyslog state=restarted use=service
+

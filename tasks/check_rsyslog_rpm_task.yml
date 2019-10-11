@@ -1,0 +1,21 @@
+
+---
+
+#сбор инф. и проверка что пакет rsyslog есть
+   - name: Check ver rsyslog sbor with rpm -qa grep rsyslog
+     shell: rpm -qa | grep rsyslog
+     check_mode: no
+     failed_when: false
+     changed_when: false
+     register: rsyslog_rpm
+
+#вывод что пакет установлен
+   - name: Check ver rsyslog sbor with rpm -qa grep rsyslog3
+     debug: msg="RSYSLOG is INSTALLED on the {{ansible_hostname}}"
+     when: "'rsyslog' in rsyslog_rpm.stdout"
+
+#вывод что пакета нет
+   - name: Check ver rsyslog sbor with rpm -qa grep rsyslog2
+     debug: msg="Rsyslog is NOOOT! installed on the remote host"
+     when: not 'rsyslog' in rsyslog_rpm.stdout
+

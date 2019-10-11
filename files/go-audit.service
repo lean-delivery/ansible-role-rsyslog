@@ -1,0 +1,11 @@
+[Unit]
+Description = go-audit
+After=network.target auditd.service
+Conflicts = auditd.service
+
+[Service]
+Type = simple
+ExecStart = /usr/bin/go-audit -config /etc/go-audit.d/go-audit.yaml
+
+[Install]
+WantedBy = multi-user.target

@@ -1,0 +1,22 @@
+# check rsyslog conf
+---
+
+  - name: Check rsyslog config
+    command: rsyslogd -N1
+    check_mode: no
+    failed_when: false
+    changed_when: false
+    register: rsyslog_config_status
+
+  - name: Report status CONFIG of rsyslog
+    debug:
+      var: rsyslog_config_status
+
+#      msg: "rsyslog is {{ (rsyslog_status.rc == 0) | ternary('Up', 'Down') }}"
+
+
+#  - name: Report status CONFIG of rsyslog
+#    debug:
+#      msg: "'error' in rsyslog_config_status.stderr TRUE"
+#    when: "'error' in rsyslog_config_status.stderr"
+
