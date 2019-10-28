@@ -1,6 +1,5 @@
 # main.yml
 ---
-
 - name: Great_scenario
   hosts: all
   user: ansible
@@ -44,7 +43,7 @@
    - include: /var/lib/deploy/audit_role/tasks/check_rsyslog_config.yml
      when: ansible_distribution == "CentOS"
 
-# копирование конфигов rsyslog (и restart) если есть ошибки в конфиге rsysloga 
+# копирование конфигов rsyslog (и restart) если есть ошибки в конфиге rsysloga
    - include: /var/lib/deploy/audit_role/tasks/copy_rsyslog_config.yml
      when: "'error during parsing file' in rsyslog_config_status.stderr"
 

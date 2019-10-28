@@ -1,26 +1,19 @@
-
 ---
-    - name: getting selinux status
-      command: getenforce
-      register: se_status_result
+- name: getting selinux status
+  command: getenforce
+  register: se_status_result
 
-    - name: output selinux status
-      debug:
-        var: se_status_result.stdout
+- name: output selinux status
+  debug:
+    var: se_status_result.stdout
 
 
 
-    - name: removing old status file
-      local_action: file path={{ playbook_dir }}/{{ inventory_hostname }}-selinux-{{ se_status_result.stdout }} state=absent
+- name: removing old status file
+  local_action: file path={{ playbook_dir }}/{{ inventory_hostname }}-selinux-{{ se_status_result.stdout }} state=absent
 
-    - name: saving selinux status
-      local_action: file path={{ playbook_dir }}/{{ inventory_hostname }}-selinux-{{ se_status_result.stdout }} state=touch
-
+- name: saving selinux status
+  local_action: file path={{ playbook_dir }}/{{ inventory_hostname }}-selinux-{{ se_status_result.stdout }} state=touch
 
 #    - name: saving selinux status
 #      local_action: command echo "tatata" > /tmp/sestatus.txt
-
-
-
-
-

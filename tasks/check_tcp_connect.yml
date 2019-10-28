@@ -1,4 +1,3 @@
-
 ---
 - hosts: 10.6.221.204
   tasks:
@@ -16,7 +15,5 @@
       register: tcp_status
 
     - name: debug_msg
-      debug: 
+      debug:
         var: tcp_status
-
-

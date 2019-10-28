@@ -1,11 +1,8 @@
 ---
+- name: Check ver auditd
+  shell: rpm -qa | grep audit
+  register: auditd_ver
 
-  - name: Check ver auditd
-    shell: rpm -qa | grep audit
-    register: auditd_ver
-
-  - name: output ver auditd
-    debug:
-      var=auditd_ver.stdout_lines
-
-
+- name: output ver auditd
+  debug:
+    var=auditd_ver.stdout_lines

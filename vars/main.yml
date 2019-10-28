@@ -1,5 +1,3 @@
 ---
 # vars file for rsyslog
-
-  - ip_rsyslog_server: 10.6.193.84
-
+ip_rsyslog_server: 10.6.193.84

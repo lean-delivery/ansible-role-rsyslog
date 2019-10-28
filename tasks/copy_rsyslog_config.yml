@@ -1,17 +1,10 @@
-
 # copy_rsyslog_config.yml
 ---
+- name: COPY_rsyslog.conf(if have ERROR in Rsyslog config)
+  copy:
+    src: /var/lib/deploy/audit_role/templates/rsyslog_clean.conf
+    dest: /etc/rsyslog.conf
 
-  - name: COPY_rsyslog.conf(if have ERROR in Rsyslog config)
-    copy:
-       src: /var/lib/deploy/audit_role/templates/rsyslog_clean.conf
-       dest: /etc/rsyslog.conf
-
-  - name: Restarting rsyslog
-    service: name=rsyslog state=restarted use=service
-    register: restart_rsyslog
-
-
-
-
-
+- name: Restarting rsyslog
+  service: name=rsyslog state=restarted use=service
+  register: restart_rsyslog

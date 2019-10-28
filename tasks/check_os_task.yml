@@ -1,13 +1,10 @@
 ---
-
-  - name: Check OS family
-    debug: 
-      var=ansible_distribution,ansible_distribution_version
-
+- name: Check OS family
+  debug:
+    var=ansible_distribution,ansible_distribution_version
 
 # разные переменные по разному можно применить
 #      var=ansible_os_family,ansible_distribution,ansible_distribution_version
 
 #    debug: msg=ansible_os_family
 #    when: ansible_os_family == "Centos 7"
- 

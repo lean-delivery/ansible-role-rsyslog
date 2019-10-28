@@ -1,19 +1,20 @@
-# Configure socket buffers, leave unset to use the system defaults
+---
+# Configure socket buffers, \n leave unset to use the system defaults
 # Values will be doubled by the kernel
 # It is recommended you do not set any of these values unless you really need to
 socket_buffer:
   # Default is net.core.rmem_default (/proc/sys/net/core/rmem_default)
   # Maximum max is net.core.rmem_max (/proc/sys/net/core/rmem_max)
   receive: 16384
-  
+
 canary: true
-  
+
 events:
   # Minimum event type to capture, default 1300
   min: 1300
   # Maximum event type to capture, default 1399
   max: 1399
-  
+
 # Configure message sequence tracking
 message_tracking:
   # Track messages and identify if we missed any, default true
@@ -22,8 +23,8 @@ message_tracking:
   log_out_of_order: false
   # Maximum out of orderness before a missed sequence is presumed dropped, default 500
   max_out_of_order: 500
- 
-output: 
+
+output:
   # Writes logs to syslog
   syslog:
     enabled: true
@@ -41,7 +42,7 @@ output:
     # Typically the name of the program generating the message. The PID is of the process is appended for you: [1233]
     # Default value is "go-audit"
     tag: "linux-audit"
-  
+
 rules:
   - -b 1024
   # required if you set canary: true
@@ -172,12 +173,12 @@ rules:
   #- -w /var/log/audit/audit[1-4].log
   - -w /var/log/messages
   - -w /etc/go-audit.yaml -p wa -k goauditconf
-  - -w /etc/audit/auditd.conf -p wa -k auditconf 
-  - -w /etc/audit/audit.rules -p wa -k auditrules 
+  - -w /etc/audit/auditd.conf -p wa -k auditconf
+  - -w /etc/audit/audit.rules -p wa -k auditrules
   # Systemd
-  - -w /bin/systemctl -p x -k systemd 
+  - -w /bin/systemctl -p x -k systemd
   - -w /etc/systemd/ -p wa -k systemd
-  #SSH 
+  #SSH
   - -w /etc/ssh/sshd_config -k sshd
   # Login configuration and information
   - -w /etc/login.defs -p wa -k login
@@ -207,7 +208,7 @@ rules:
   # You can also use this to lock the rules. Locking requires a reboot to modify the ruleset.
   # This should be the last rule in the chain.
   - -e 1
-  
+
 filters:
   # reduce the number of connect syscall events being logged
   - syscall: 42

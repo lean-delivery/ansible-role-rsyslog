@@ -1,28 +1,26 @@
 ---
+- name: Install_nano
+  yum:
+    name: nano
+    state: present
+  when: ansible_distribution_version == "7.6.1810" and ansible_distribution == "CentOS"
 
-   - name: Install_nano
-     yum:
-       name: nano
-       state: present
-     when: ansible_distribution_version == "7.6.1810" and ansible_distribution == "CentOS"
+- name: Install_tcpdump
+  yum:
+    name: tcpdump
+    state: present
+  when: ansible_distribution_version == "7.6.1810" and ansible_distribution == "CentOS"
 
-   - name: Install_tcpdump
-     yum:
-       name: tcpdump
-       state: present
-     when: ansible_distribution_version == "7.6.1810" and ansible_distribution == "CentOS"
+- name: Install_nc
+  yum:
+    name: nc
+    state: present
+  when: ansible_distribution_version == "7.6.1810" and ansible_distribution == "CentOS"
 
-   - name: Install_nc
-     yum:
-       name: nc
-       state: present
-     when: ansible_distribution_version == "7.6.1810" and ansible_distribution == "CentOS"
-
-   - command: sed -i 's/.*#TCPKeepAlive.*/  TCPKeepAlive yes/' /etc/ssh/sshd_config
+- command: sed -i 's/.*#TCPKeepAlive.*/  TCPKeepAlive yes/' /etc/ssh/sshd_config
 #   - command: sed -i 's/.*#TCPKeepAlive.*/  TCPKeepAlive/' /etc/ssh/sshd_config
-   - command: sed -i 's/.*ClientAliveCountMax 0.*/  ClientAliveCountMax 120/' /etc/ssh/sshd_config 
+- command: sed -i 's/.*ClientAliveCountMax 0.*/  ClientAliveCountMax 120/' /etc/ssh/sshd_config
 
 #  ClientAliveCountMax 0
 
-   - command: systemctl restart sshd
-
+- command: systemctl restart sshd
