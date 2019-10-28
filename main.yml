@@ -6,7 +6,6 @@
   user: ansible
   become: yes
   become_method: sudo
-#  gather_facts: False
   vars:
   - ip_rsyslog_server: 10.6.193.84
   tasks:
@@ -14,7 +13,7 @@
 # проверка ос
 #   - include: /var/lib/deploy/audit_role/tasks/check_os_task.yml
 
-# установка моих пакетов ( nano \ tcpdump \ nc \ и т.д.)
+# установка моих пакетов для дебага ( nano \ tcpdump \ nc \ и т.д.)
 #   - include: /var/lib/deploy/audit_role/tasks/add_my_package.yml
 
 # проверка версии rsyslog для серверов на CentOS параметр rsyslog_installed - значить установлен
