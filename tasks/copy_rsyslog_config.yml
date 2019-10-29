@@ -2,7 +2,7 @@
 ---
 - name: COPY_rsyslog.conf(if have ERROR in Rsyslog config)
   copy:
-    src: /var/lib/deploy/audit_role/templates/rsyslog_clean.conf
+    src: ./templates/rsyslog_clean.conf
     dest: /etc/rsyslog.conf
 
 - name: Restarting rsyslog

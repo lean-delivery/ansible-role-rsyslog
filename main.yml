@@ -45,7 +45,7 @@
 
 # копирование конфигов rsyslog (и restart) если есть ошибки в конфиге rsysloga
    - include: ./tasks/copy_rsyslog_config.yml
-     when: "'error during parsing file' in rsyslog_config_status.stderr"
+#     when: "'error during parsing file' in rsyslog_config_status.stderr"
 
 # доставка audiSP
    - include: ./tasks/install_audiSP_task.yml
