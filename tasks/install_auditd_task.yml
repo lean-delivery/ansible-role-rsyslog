@@ -9,7 +9,7 @@
       src: ../templates/audit.rules
       dest: /etc/audit/rules.d/audit.rules
 
-- command: service auditd stop
+#- command: service auditd stop
 - name: Restarting auditd
   service: name=auditd state=started use=service
   register: result_auditd_status
