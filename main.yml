@@ -6,7 +6,11 @@
   become: yes
   become_method: sudo
   vars:
-  - ip_rsyslog_server: 10.6.193.84
+#centos_server
+#   - ip_rsyslog_server: 10.6.193.84
+#debian_rsyslog_server
+  - ip_rsyslog_server: 10.6.194.112
+
   tasks:
 
 # проверка ос
