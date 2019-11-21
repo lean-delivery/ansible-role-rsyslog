@@ -7,7 +7,7 @@
   become_method: sudo
   vars:
 #centos_server
-#   - ip_rsyslog_server: 10.6.193.84
+   - ip_rsyslog_server: 10.6.1.33
 #debian_rsyslog_server
   - ip_rsyslog_server: 10.6.194.112
 
