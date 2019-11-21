@@ -1,0 +1,15 @@
+# copy_certs.yml
+---
+- name: COPY_cert CA for TLS
+  copy:
+    src: ./files/ca.pem
+    dest: /etc/pki/rsyslog/ca.pem
+
+- name: COPY_cert rsl-server
+  copy:
+    src: ./files/
+    dest: /etc/pki/rsyslog/10-send-epam-siem.conf
+
+- name: Restarting rsyslog
+  service: name=rsyslog state=restarted use=service
+  register: restart_rsyslog
