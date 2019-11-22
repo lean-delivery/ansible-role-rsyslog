@@ -2,14 +2,35 @@
 ---
 - name: Install_rsyslog
   yum:
-#      name: rsyslog-8.24.0-41.el7_7.x86_64
-    name: rsyslog
+    name: rsyslog-8.24.0-41.el7_7.x86_64
     state: latest
     enablerepo: base
 
 - name: Report status install of rsyslog
   debug:
     var: rsyslog_instaled
+
+- name: Install_rsyslog-relp
+  yum:
+    name: rsyslog-relp
+    state: latest
+    enablerepo: base
+
+- name: Report status install of rsyslog
+  debug:
+    var: rsyslog-relp_instaled
+
+- name: Install_rsyslog-gnutls
+  yum:
+    name: rsyslog-gnutls
+    state: latest
+    enablerepo: base
+
+- name: Report status install of rsyslog
+  debug:
+    var: rsyslog-gnutls_instaled
+
+
 
 
 #  - name: COPY_rsyslog.conf

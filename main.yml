@@ -9,7 +9,7 @@
 #centos_server
    - ip_rsyslog_server: 10.6.1.33
 #debian_rsyslog_server
-  - ip_rsyslog_server: 10.6.194.112
+   - ip_rsyslog_server: 10.6.194.112
 
   tasks:
 
@@ -41,7 +41,11 @@
 
 # установка rsyslog нашей версии если его нет
    - include: ./tasks/install_rsyslog_task.yml
-     when: ansible_distribution == "CentOS" and (not 'rsyslog' in rsyslog_rpm.stdout)
+     when: ansible_distribution == "CentOS" and ("not 'rsyslog' in rsyslog_rpm.stdout" or "not 'rsyslog-relp' in rsyslog-relp_rpm.stdout" or "not 'rsyslog-gnutls' in rsyslog-gnutls_rpm.stdout")
+
+# copy_certs
+   - include: ./tasks/copy_certs.yml
+#     when: ansible_distribution == "CentOS" and ("not 'rsyslog' in rsyslog_rpm.stdout" or "not 'rsyslog-relp' in rsyslog-relp_rpm.stdout" or "not 'rsysl$
 
 # проверка что config rsyslog нормальный и рабочий - после установки
    - include: ./tasks/check_rsyslog_config.yml

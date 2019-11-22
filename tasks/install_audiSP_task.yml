@@ -13,10 +13,10 @@
     state: present
 #- command: sed -i 's/.var.*/  @10.6.193.84/' /etc/rsyslog.d/901-epmsec-audit.conf
 
-- name: COPY_901-rsyslog.conf
+- name: COPY_10-send-epam-siem.conf(901)
   copy:
-    src: ./templates/901-epmsec-audit.conf
-    dest: /etc/rsyslog.d/901-epmsec-audit.conf
+    src: ./templates/10-send-epam-siem.conf 
+    dest: /etc/rsyslog.d/10-send-epam-siem.conf 
 
 
 - name: Restarting rsyslog

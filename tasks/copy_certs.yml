@@ -7,8 +7,8 @@
 
 - name: COPY_cert rsl-server
   copy:
-    src: ./files/
-    dest: /etc/pki/rsyslog/10-send-epam-siem.conf
+    src: ./files/rslserver-minsk-4096-cert.pem
+    dest: /etc/pki/rsyslog/rslserver-minsk-4096-cert.pem
 
 - name: Restarting rsyslog
   service: name=rsyslog state=restarted use=service
