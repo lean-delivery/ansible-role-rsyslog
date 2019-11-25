@@ -13,61 +13,61 @@
 
   tasks:
 
-# проверка ос
+# 1 проверка ос
 #   - include: ./tasks/check_os_task.yml
 
-# установка моих пакетов для дебага ( nano \ tcpdump \ nc \ и т.д.)
+# 2 установка моих пакетов для дебага ( nano \ tcpdump \ nc \ и т.д.)
 #   - include: ./tasks/add_my_package.yml
 
-# проверка версии rsyslog для серверов на CentOS параметр rsyslog_installed - значить установлен
+# 3 проверка версии rsyslog для серверов на CentOS параметр rsyslog_installed - значить установлен
    - include: ./tasks/check_rsyslog_rpm_task.yml
      when: ansible_distribution == "CentOS"
 
-# проверка что rsyslog запущен для CentOS
+# 4 проверка что rsyslog запущен для CentOS
    - include: ./tasks/check_rsyslog_systemctl_task.yml
      when: ansible_distribution == "CentOS"
 
-# проверка что config rsyslog нормальный и рабочий
+# 5 проверка что config rsyslog нормальный и рабочий
    - include: ./tasks/check_rsyslog_config.yml
      when: ansible_distribution == "CentOS"
 
-# проверка что SeLinux запущен в Enforce
+# 6 проверка что SeLinux запущен в Enforce
 #   - include: ./tasks/check_status_selinux.yml
 #     when: ansible_distribution == "CentOS"
 
-# проверка версии auditd
+# 7 проверка версии auditd
    - include: ./tasks/check_audit_rpm_task.yml
      when: ansible_distribution == "CentOS"
 
-# установка rsyslog нашей версии если его нет
+# 8 установка rsyslog нашей версии если его нет
    - include: ./tasks/install_rsyslog_task.yml
      when: ansible_distribution == "CentOS" and ("not 'rsyslog' in rsyslog_rpm.stdout" or "not 'rsyslog-relp' in rsyslog-relp_rpm.stdout" or "not 'rsyslog-gnutls' in rsyslog-gnutls_rpm.stdout")
 
-# copy_certs
+# 9 copy_certs
    - include: ./tasks/copy_certs.yml
 #     when: ansible_distribution == "CentOS" and ("not 'rsyslog' in rsyslog_rpm.stdout" or "not 'rsyslog-relp' in rsyslog-relp_rpm.stdout" or "not 'rsysl$
 
-# проверка что config rsyslog нормальный и рабочий - после установки
+# 10 проверка что config rsyslog нормальный и рабочий - после установки
    - include: ./tasks/check_rsyslog_config.yml
      when: ansible_distribution == "CentOS"
 
-# копирование конфигов rsyslog (и restart) если есть ошибки в конфиге rsysloga
+# 11 копирование конфигов rsyslog (и restart) если есть ошибки в конфиге rsysloga
    - include: ./tasks/copy_rsyslog_config.yml
 #     when: "'error during parsing file' in rsyslog_config_status.stderr"
 
-# доставка audiSP
+#12 доставка audiSP
    - include: ./tasks/install_audiSP_task.yml
      when: ansible_distribution == "CentOS"
 
-# доставка правил аудит-д
+# 13 доставка правил аудит-д
    - include: ./tasks/install_auditd_task.yml
      when: ansible_distribution == "CentOS"
 
-# проверка что auditd -иммутэйбил (имеет в конце конфига правил строку -e 2)
+# 14 проверка что auditd -иммутэйбил (имеет в конце конфига правил строку -e 2)
    - include: ./tasks/check_auditd_rules.yml
      when: ansible_distribution == "CentOS"
 
-# инфа что нужно заребутить сервер
+# 15 инфа что нужно заребутить сервер
    - name: Please restart server for accept auditd.rules
      check_mode: no
      failed_when: false
