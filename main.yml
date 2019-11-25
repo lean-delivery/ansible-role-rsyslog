@@ -29,7 +29,7 @@
 
 # 5 проверка что config rsyslog нормальный и рабочий
    - include: ./tasks/check_rsyslog_config.yml
-     when: ansible_distribution == "CentOS"
+     when: ansible_distribution == "CentOS" and (rsyslog_status.rc == 0)
 
 # 6 проверка что SeLinux запущен в Enforce
 #   - include: ./tasks/check_status_selinux.yml
@@ -51,9 +51,10 @@
    - include: ./tasks/check_rsyslog_config.yml
      when: ansible_distribution == "CentOS"
 
-# 11 копирование конфигов rsyslog (и restart) если есть ошибки в конфиге rsysloga
+# 11 копирование конфигов rsyslog (и restart) если есть ошибки в конфиге rsysloga (если рсислог был не установлен\если был не запущен)
    - include: ./tasks/copy_rsyslog_config.yml
-#     when: "'error during parsing file' in rsyslog_config_status.stderr"
+     when: "'error during parsing file' in rsyslog_config_status.stderr"
+
 
 #12 доставка audiSP
    - include: ./tasks/install_audiSP_task.yml

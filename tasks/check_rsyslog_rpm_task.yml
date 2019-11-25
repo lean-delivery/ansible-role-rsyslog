@@ -1,6 +1,6 @@
 ---
 #сбор инф. и проверка что пакет rsyslog есть
-- name: Check ver rsyslog sbor with rpm -qa grep rsyslog
+- name: Part1 Check ver rsyslog sbor with rpm -qa grep rsyslog
   shell: rpm -qa | grep rsyslog
   check_mode: no
   failed_when: false
@@ -8,14 +8,14 @@
   register: rsyslog_rpm
 
 
-- name: Check ver rsyslog sbor with rpm -qa grep rsyslog
+- name: Check ver rsyslog-relp
   shell: rpm -qa | grep rsyslog-relp
   check_mode: no
   failed_when: false
   changed_when: false
   register: rsyslog-relp_rpm
 
-- name: Check ver rsyslog sbor with rpm -qa grep rsyslog
+- name: Check ver rsyslog-gnutls
   shell: rpm -qa | grep rsyslog-gnutls
   check_mode: no
   failed_when: false
