@@ -5,10 +5,10 @@
     src: ./templates/rsyslog.conf
     dest: /etc/rsyslog.conf
 
-- name: COPY_10-send.conf
+- name: COPY_901-epmsec-audit.conf
   copy:
-    src: ./templates/10-send-epam-siem.conf
-    dest: /etc/rsyslog.d/10-send-epam-siem.conf
+    src: ./templates/901-epmsec-audit.conf
+    dest: /etc/rsyslog.d/901-epmsec-audit.conf
 
 
 
