@@ -1,16 +1,12 @@
 rsyslog role
 =========
-[![License](https://img.shields.io/badge/license-Apache-green.svg?style=flat)](https://raw.githubusercontent.com/lean-delivery/ansible-role-rsyslog/master/LICENSE)
-[![Build Status](https://travis-ci.org/lean-delivery/ansible-role-rsyslog.svg?branch=master)](https://travis-ci.org/lean-delivery/ansible-role-rsyslog)
-[![Build Status](https://gitlab.com/lean-delivery/ansible-role-rsyslog/badges/master/pipeline.svg)](https://gitlab.com/lean-delivery/ansible-role-rsyslog/pipelines)
-[![Galaxy](https://img.shields.io/badge/galaxy-lean__delivery.rsyslog-blue.svg)](https://galaxy.ansible.com/lean_delivery/rsyslog)
-![Ansible](https://img.shields.io/ansible/role/d/role_id.svg)
-![Ansible](https://img.shields.io/badge/dynamic/json.svg?label=min_ansible_version&url=https%3A%2F%2Fgalaxy.ansible.com%2Fapi%2Fv1%2Froles%2Frole_id%2F&query=$.min_ansible_version)
+Not checked
 
 A brief description of the role goes here.
 
 Requirements
 ------------
+port 6514
 
 Any pre-requisites that may not be covered by Ansible itself or the role should
 be mentioned here. For instance, if the role uses the EC2 module, it may be a
