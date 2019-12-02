@@ -59,11 +59,11 @@
 -a exit,never -F arch=b64 -F dir=/var/lock/lvm -k locklvm
 
 # Rules -----------------------------------------------------------------------
-# failure to access file because of perms
--a always,exit -F arch=b32 -S open -S openat -F exit=-EACCES -k access
--a always,exit -F arch=b64 -S open -S openat -F exit=-EACCES -k access
--a always,exit -F arch=b32 -S open -S openat -F exit=-EPERM -k access
--a always,exit -F arch=b64 -S open -S openat -F exit=-EPERM -k access
+# failure to access file because of perms# TODO TEMP DISABLE
+#-a always,exit -F arch=b32 -S open -S openat -F exit=-EACCES -k access
+#-a always,exit -F arch=b64 -S open -S openat -F exit=-EACCES -k access
+#-a always,exit -F arch=b32 -S open -S openat -F exit=-EPERM -k access
+#-a always,exit -F arch=b64 -S open -S openat -F exit=-EPERM -k access
 
 
 
@@ -166,8 +166,8 @@
 -w /etc/sudoers -p wa -k actions
 
 # deleting files #todo testoverkill on balancers #todo elasticsearch indices
--a exit,always -F arch=b32 -S unlink -S rmdir -k unlink_remove
--a exit,always -F arch=b64 -S unlink -S rmdir -k unlink_remove
+#-a exit,always -F arch=b32 -S unlink -S rmdir -k unlink_remove
+#-a exit,always -F arch=b64 -S unlink -S rmdir -k unlink_remove
 
 
 # Pam configuration
@@ -180,9 +180,9 @@
 # Ldap auth cs_configuration
 -w /etc/sssd/ -p wa -k sssd
 
-# Kerberos config
--w /etc/krb5.conf -k KERB_CONFIG
--w /etc/krb5.conf.d/ -k KERB_CONFIG
+# Kerberos config TODO temp disabled
+#-w /etc/krb5.conf -k KERB_CONFIG
+#-w /etc/krb5.conf.d/ -k KERB_CONFIG
 
 # SELinux events that modify the system's Mandatory Access Controls (MAC)
 -w /etc/selinux/ -p wa -k mac_policy
@@ -368,7 +368,9 @@
 -a always,exit -F arch=b64 -S rename -S renameat -S truncate -S chmod -S setxattr -S lsetxattr -S removexattr -S lremovexattr -F exit=-EACCES -k file_modification
 -a always,exit -F arch=b32 -S rename -S renameat -S truncate -S chmod -S setxattr -S lsetxattr -S removexattr -S lremovexattr -F exit=-EPERM -k file_modification
 -a always,exit -F arch=b64 -S rename -S renameat -S truncate -S chmod -S setxattr -S lsetxattr -S removexattr -S lremovexattr -F exit=-EPERM -k file_modification
-
 # Enable kernel auditing (required if not done via the "audit" kernel boot parameter)
 # You can also use this to lock the rules. Locking (-e 2)  requires a reboot to modify the ruleset.
 # This should be the last rule in the chain.
+-e 1
+                                                                                                     
+

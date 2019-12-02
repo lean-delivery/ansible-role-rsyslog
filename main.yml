@@ -53,7 +53,9 @@
 
 # 11 копирование конфигов rsyslog (и restart) если есть ошибки в конфиге rsysloga (если рсислог был не установлен\если был не запущен)
    - include: ./tasks/copy_rsyslog_config.yml
-     when: "'error during parsing file' in rsyslog_config_status.stderr"
+     when: ansible_distribution == "CentOS"
+
+#     when: "'error during parsing file' in rsyslog_config_status.stderr"
 
 
 #12 доставка audiSP

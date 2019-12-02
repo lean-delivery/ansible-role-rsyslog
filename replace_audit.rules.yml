@@ -1,0 +1,41 @@
+# replace audit.rules.yml
+---
+- name: replace_audit_rules
+  hosts: all
+  user: ansible
+  become: yes
+  become_method: sudo
+  vars:
+#Minsk_centos_server
+#   - ip_rsyslog_server: 10.6.1.33
+#Kyiv_rsyslog_server
+   - ip_rsyslog_server: 10.17.14.76
+
+  tasks:
+
+# 1 установка моих пакетов для дебага ( nano \ tcpdump \ nc \ и т.д.)
+#   - include: ./tasks/add_my_package.yml
+
+# 2 доставка audiSP
+#   - include: ./tasks/install_audiSP_task_ubuntu.yml
+#     when: ansible_distribution == "CentOS"
+
+#   - name: COPY_auditd_conf
+#      copy:
+#          src: ../templates/auditd.conf
+#          dest: /etc/audit/auditd.conf
+
+    - name: COPY_auditd_rules
+      copy:
+          src: ../templates/audit.rules
+          dest: /etc/audit/rules.d/audit.rules
+
+    - name: Restarting auditd
+      service: name=auditd state=restarted use=service
+      register: result_auditd_status
+
+
+    - name: Report auditd Status
+      debug:
+         var: result_auditd_status
+

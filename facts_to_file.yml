@@ -1,0 +1,32 @@
+
+# Collects facts
+---
+- name: Collects_fact
+  hosts: all
+  user: ansible
+  become: yes
+  become_method: sudo
+  vars:
+#Minsk_centos_server
+#   - ip_rsyslog_server: 10.6.1.33
+#Kyiv_rsyslog_server
+   - ip_rsyslog_server: 10.17.14.76
+
+# gather_facts: false
+
+  tasks:
+
+    - name: Facts
+      command: hostname -A
+#      facts:
+#        gather_subset: all
+#        provider: "{{ cli }}"
+      register: ios_facts_result
+
+    - name: Copy facts to files
+      local_action: >
+        copy:
+          content: "{{ ios_facts_result.stdout | to_nice_yaml }}"
+          dest: "/tmp/{{inventory_hostname}}_facts.yml"
+
+

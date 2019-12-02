@@ -10,12 +10,12 @@
 #10.6.223.232
 
 
-#10.6.217.79  #my agent work
-#10.6.220.80  #volodimir
-10.6.219.54    #ecsc00a06636
-
-
-
+#10.6.217.79     #my agent work
+#10.6.220.80     #volodimir
+#10.6.219.54     #ecsc00a06636
+#10.253.218.98   # ubuntu18
+#10.6.219.54     # ubuntu18 send log to kyiv
+10.6.194.112     # debian 10 send to princeton
 
 
 
