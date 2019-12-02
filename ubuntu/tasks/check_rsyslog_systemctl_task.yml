@@ -1,0 +1,22 @@
+---
+- name: Check status of rsyslog
+  command: systemctl -q is-active rsyslog
+  check_mode: no
+  failed_when: false
+  changed_when: false
+  register: rsyslog_status
+
+#  - name: Report status of rsyslog
+#    debug:
+#      msg: "rsyslog is {{ (rsyslog_status.rc == 0) | ternary('Up', 'Down') }}"
+
+#  - name: Check status of rsyslog
+#    command: systemctl -q is-active rsyslog
+#    check_mode: no
+#    failed_when: false
+#    changed_when: false
+#    register: rsyslog_status
+
+- name: Report status of rsyslog
+  debug:
+    msg: "Если rc=0 значить рсислог запущен(active_running)!!! иначе - остановлен. rc = {{rsyslog_status.rc}}"
