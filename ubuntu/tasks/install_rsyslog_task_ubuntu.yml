@@ -1,35 +1,39 @@
 # install_rsyslog_task.yml
 ---
 - name: Install_rsyslog
-  yum:
+  apt:
     name: rsyslog
     state: latest
-    enablerepo: base
+#    enablerepo: base
 
 - name: Report status install of rsyslog
   debug:
     var: rsyslog_instaled
 
 - name: Install_rsyslog-relp
-  yum:
+  apt:
     name: rsyslog-relp
     state: latest
-    enablerepo: base
+#    enablerepo: base
 
 - name: Report status install of rsyslog
   debug:
     var: rsyslog-relp_instaled
 
 - name: Install_rsyslog-gnutls
-  yum:
+  apt:
     name: rsyslog-gnutls
     state: latest
-    enablerepo: base
 
 - name: Report status install of rsyslog
   debug:
     var: rsyslog-gnutls_instaled
 
+- name: Create a work directory if it does not exist
+  file:
+    path: /var/lib/rsyslog
+    state: directory
+    mode: '0755'
 
 
 

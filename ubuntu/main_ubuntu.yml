@@ -21,7 +21,7 @@
 
 # 3 установка rsyslog нашей версии если его нет
    - include: ./tasks/install_rsyslog_task_ubuntu.yml
-     when: ansible_distribution == "CentOS" 
+     when: ansible_distribution == "Debian" 
 
 # 4 copy_certs
    - include: ./tasks/copy_certs.yml
@@ -29,14 +29,14 @@
 
 # 5 копирование конфигов rsyslog (и restart) если есть ошибки в конфиге rsysloga (если рсислог был не установлен\если был не запущен)
    - include: ./tasks/copy_rsyslog_config.yml
-     when: ansible_distribution == "CentOS"
+     when: ansible_distribution == "Debian"
 
 
 # 6 доставка audiSP
-   - include: ./tasks/install_audiSP_task_ubuntu.yml
-     when: ansible_distribution == "CentOS"
+   - include: ./tasks/install_audiSP_task_debian.yml
+     when: ansible_distribution == "Debian"
 
 # 7 доставка правил аудит-д
    - include: ./tasks/install_auditd_task.yml
-     when: ansible_distribution == "CentOS"
+     when: ansible_distribution == "Debian"
 

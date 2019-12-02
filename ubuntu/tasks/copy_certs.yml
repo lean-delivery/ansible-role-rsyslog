@@ -3,12 +3,14 @@
 - name: COPY_cert CA for TLS
   copy:
     src: ./files/ca.pem
-    dest: /etc/pki/rsyslog/ca.pem
+    dest: /etc/pki/rsyslog/
+#ca.pem
 
 - name: COPY_cert rsl-server
   copy:
     src: ./files/rslserver-minsk-4096-cert.pem
-    dest: /etc/pki/rsyslog/rslserver-minsk-4096-cert.pem
+    dest: /etc/pki/rsyslog/
+#rslserver-minsk-4096-cert.pem
 
 - name: Restarting rsyslog
   service: name=rsyslog state=restarted use=service

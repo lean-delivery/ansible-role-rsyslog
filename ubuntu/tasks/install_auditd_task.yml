@@ -11,7 +11,7 @@
 
 #- command: service auditd stop
 - name: Restarting auditd
-  service: name=auditd state=started use=service
+  service: name=auditd state=restarted use=service
   register: result_auditd_status
 
 
