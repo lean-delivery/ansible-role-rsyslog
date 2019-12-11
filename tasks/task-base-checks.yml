@@ -1,0 +1,12 @@
+---
+- name: "task-postinstall-checks | Check rsyslog config"
+  command: rsyslogd -N1
+  check_mode: no
+  failed_when: false
+  changed_when: false
+  register: rsyslog_config_status
+
+- name: "task-postinstall-checks | Config check"
+  debug:
+    msg: "Config is invalid! OS: {{ ansible_distribution }} {{ ansible_distribution_major_version }}"
+  when: rsyslog_config_status.stdout is defined and "error" in rsyslog_config_status.stdout

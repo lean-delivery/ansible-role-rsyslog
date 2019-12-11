@@ -1,0 +1,40 @@
+---
+- name: "task-base-configure | Set facts"
+  set_fact:
+    cur_os: "{{ (ansible_distribution | lower) }}"
+    cur_os_ver: "{{ (ansible_distribution_major_version | lower) }}"
+
+- name: "task-base-configure | Recursively create directories"
+  file:
+    path: "{{ d }}"
+    state: directory
+    recurse: yes
+    owner: root
+    group: root
+  loop_control:
+    loop_var: d
+  with_items:
+    - "/etc/pki/rsyslog"
+    - "/etc/rsyslog-keys"
+    - "/var/lib/rsyslog"
+
+- name: "task-base-configure | Copy config files"
+  copy:
+    src: "{{ conf.src }}"
+    dest: "{{ conf.dest }}"
+    force: True
+  loop_control:
+    loop_var: conf
+  with_items: "{{ rs_au_configs }}"
+  when: (cur_os in conf.os or "*" in conf.os) and
+        (cur_os_ver in conf.os_version or "*" in conf.os_version)
+
+- name: "task-base-configure | Apply Jinja templates"
+  template:
+    src: "{{ tmpl.src }}"
+    dest: "{{ tmpl.dest }}"
+  loop_control:
+    loop_var: tmpl
+  with_items: "{{ rs_au_templates }}"
+  when: (cur_os in tmpl.os or "*" in tmpl.os) and
+        (cur_os_ver in tmpl.os_version or "*" in tmpl.os_version)

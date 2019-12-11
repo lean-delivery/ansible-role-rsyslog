@@ -1,0 +1,81 @@
+---
+- name: "Defaults"
+  set_fact:
+    path: "{{ inventory_dir }}/report-{{ ansible_date_time.epoch }}.csv"
+    ver_rs: "-"
+    ver_au: "-"
+    ver_rsyslog_gnutls: "-"
+    ver_rsyslog_relp: "-"
+    ver_audisp_json: "-"
+
+- name: "Proceed"
+  block:
+
+    - name: "Collect installed software"
+      package_facts:
+        manager: "auto"
+
+    - name: "auditd"
+      when: "'audit' in ansible_facts.packages"
+      block:
+        - set_fact:
+            ver_au: "{{ ansible_facts.packages['audit'][0].version }}"
+        - debug: msg="audit {{ ver_au }}"
+
+    - name: "rsyslog"
+      when: "'rsyslog' in ansible_facts.packages"
+      block:
+        - set_fact:
+            ver_rs: "{{ ansible_facts.packages['rsyslog'][0].version }}"
+        - debug: msg="rsyslog {{ ver_rs }}"
+
+    - name: "rsyslog-gnutls"
+      when: "'rsyslog-gnutls' in ansible_facts.packages"
+      block:
+        - set_fact:
+            ver_rsyslog_gnutls: "{{ ansible_facts.packages['rsyslog-gnutls'][0].version }}"
+        - debug: msg="rsyslog-gnutils {{ ver_rsyslog_gnutls }}"
+
+    - name: "rsyslog-relp"
+      when: "'rsyslog-relp' in ansible_facts.packages"
+      block:
+        - set_fact:
+            ver_rsyslog_relp: "{{ ansible_facts.packages['rsyslog-relp'][0].version }}"
+        - debug: msg="rsyslog-relp {{ ver_rsyslog_relp }}"
+
+    - name: "audisp"
+      when: "'audisp-json' in ansible_facts.packages"
+      block:
+        - set_fact:
+            ver_audisp_json: "{{ ansible_facts.packages['audisp-json'][0].version }}"
+        - debug: msg="audisp-json {{ ver_audisp_json }}"
+
+    - name: "Create File: {{ path }}"
+      file:
+        path: "{{ item }}"
+        state: touch
+      with_items:
+        - "{{ path }}"
+      ignore_errors: yes
+      become: no
+      delegate_to: localhost
+      run_once: yes
+
+    - name: "Prepare File: {{ path }}"
+      lineinfile:
+        dest: "{{ item }}"
+        line: "host|auditd|rsyslog|rsyslog-gnutls|rsyslog-relp|audisp-json|os|version"
+        insertafter: EOF
+      with_items:
+        - "{{ path }}"
+      become: no
+      delegate_to: localhost
+      run_once: yes
+
+    - name: "Write To File: {{ path }}"
+      lineinfile:
+        dest: "{{ path }}"
+        line: "{{ (inventory_hostname | lower) }}|{{ ver_au }}|{{ ver_rs }}|{{ ver_rsyslog_gnutls }}|{{ ver_rsyslog_relp }}|{{ ver_audisp_json }}|{{ ansible_distribution }}|{{ ansible_distribution_major_version }}"
+        insertafter: EOF
+      become: no
+      delegate_to: localhost

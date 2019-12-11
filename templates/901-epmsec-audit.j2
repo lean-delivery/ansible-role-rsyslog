@@ -1,0 +1,19 @@
+module(load="omrelp")
+module(load="builtin:omfile")
+module(load="builtin:omfwd")
+
+template (name="LongTagForwardFormat" type="string" string="<%PRI%>%TIMESTAMP% EPAM_RSYSLOG_SERVER %FROMHOST-IP% %msg%\n")
+
+
+ruleset(name="sendToLogserver") {
+action(type="omfwd" protocol="tcp" target="{{ rs_au_rsyslog_server }}" port="{{ rs_au_rsyslog_port }}" template="LongTagForwardFormat" StreamDriver="gtls" StreamDriverMode="1" StreamDriverAuthMode="anon" )
+}
+
+# Tee off interesting auth facility log lines, matching lines will continue on to other outputs
+if ($programname == "audisp-json") then {
+# for debug
+#    action(type="omfile" file="/var/log/myLog_auditsp.log")
+    action(type="omfwd" protocol="tcp" target="{{ rs_au_rsyslog_server }}" port="{{ rs_au_rsyslog_port }}" StreamDriver="gtls" StreamDriverMode="1" StreamDriverAuthMode="anon")
+    call sendToLogserver
+    stop
+}

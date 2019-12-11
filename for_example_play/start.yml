@@ -1,0 +1,10 @@
+- name: "Rsyslog/Audit Installation - Minsk"
+  hosts: my_test_hosts
+  remote_user: ansible
+  become: yes
+  become_method: sudo
+  roles:
+    - role: ansible-role-rsyslog-epm-dos
+      rs_au_rsyslog_server: "10.253.0.168"   # hungary
+#      rs_au_rsyslog_server: "evrupetsa0050.peterburg.epam.com"
+      rs_au_action: "install"

@@ -1,0 +1,17 @@
+---
+- name: "Set facts"
+  set_fact:
+    cur_os: "{{ (ansible_distribution | lower) }}"
+    cur_os_ver: "{{ (ansible_distribution_major_version | lower) }}"
+
+- name: "task-base-postinstall"
+  service:
+    name: "{{ pkg.daemon_name }}"
+    state: restarted
+    use: service
+  loop_control:
+    loop_var: pkg
+  with_items: "{{ rs_au_packages }}"
+  when: pkg.isDaemon == True and
+        (cur_os in pkg.os or "*" in pkg.os) and
+        (cur_os_ver in pkg.os_version or "*" in pkg.os_version)

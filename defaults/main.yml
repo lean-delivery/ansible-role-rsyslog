@@ -1,2 +1,98 @@
 ---
-# defaults file for rsyslog
+rs_au_action: "install"
+
+rs_au_rsyslog_server: "none"
+rs_au_rsyslog_port: 6514
+
+rs_au_packages:
+
+  - install_name: "rsyslog"
+    daemon_name: "rsyslog"
+    state: latest
+    isDaemon: True
+    os: [ "centos", "ubuntu" ]
+    os_version: [ "7", "14", "16", "18" ]
+
+  - install_name: "rsyslog-relp"
+    daemon_name: ""
+    state: latest
+    isDaemon: False
+    os: [ "centos", "ubuntu" ]
+    os_version: [ "7", "14", "16", "18" ]
+
+  - install_name: "rsyslog-gnutls"
+    daemon_name: ""
+    state: latest
+    isDaemon: False
+    os: [ "centos", "ubuntu" ]
+    os_version: [ "7", "14", "16", "18" ]
+
+  - install_name: "auditd"
+    daemon_name: "auditd"
+    state: latest
+    isDaemon: True
+    os: [ "ubuntu" ]
+    os_version: [ "14", "16", "18" ]
+
+  - install_name: "audit"
+    daemon_name: "auditd"
+    state: latest
+    isDaemon: True
+    os: [ "centos" ]
+    os_version: [ "7" ]
+
+rs_au_direct_install:
+
+  - src: 'audisp-json-2.2.5-1.x86_64.rpm'
+    dest: '/tmp/'
+    os: [ "centos" ]
+    os_version: [ "7" ]
+
+  - src: 'audisp-json_2.2.5_amd64.deb'
+    dest: '/tmp/'
+    os: [ "ubuntu" ]
+    os_version: [ "14", "16", "18" ]
+
+rs_au_configs:
+
+  - src: "../templates/rsyslog.conf"
+    dest: "/etc/rsyslog.conf"
+    os: [ "centos", "ubuntu" ]
+    os_version: [ "7", "14", "16", "18" ]
+
+  - src: "../templates/auditd-regular.conf"
+    dest: "/etc/audit/auditd.conf"
+    os: [ "centos", "ubuntu" ]
+    os_version: [ "7", "14", "18" ]
+
+  - src: "../templates/auditd-ubuntu-1604.conf"
+    dest: "/etc/audit/auditd.conf"
+    os: [ "ubuntu" ]
+    os_version: [ "14", "16" ]
+
+  - src: "../templates/audit-centos.rules"
+    dest: "/etc/audit/rules.d/audit.rules"
+    os: [ "centos", "ubuntu" ]
+    os_version: [ "7", "14", "18" ]
+
+  - src: "../templates/audit-ubuntu.rules"
+    dest: "/etc/audit/audit.rules"
+    os: [ "ubuntu" ]
+    os_version: [ "14", "16" ]
+
+  - src: "../files/ca.pem"
+    dest: "/etc/pki/rsyslog/ca.pem"
+    os: [ "centos", "ubuntu" ]
+    os_version: [ "7", "14", "16", "18" ]
+
+  - src: "../files/rslserver-minsk-4096-cert.pem"
+    dest: "/etc/pki/rsyslog/rslserver-minsk-4096-cert.pem"
+    os: [ "centos", "ubuntu" ]
+    os_version: [ "7", "14", "16", "18" ]
+
+rs_au_templates:
+
+  - src: "901-epmsec-audit.j2"
+    dest: "/etc/rsyslog.d/901-epmsec-audit.conf"
+    os: [ "*" ]
+    os_version: [ "*" ]

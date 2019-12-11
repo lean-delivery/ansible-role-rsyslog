@@ -1,0 +1,6 @@
+---
+- name: "task-base-configure"
+  include: 'task-base-configure.yml'
+
+- name: "task-base-postinstall"
+  include: 'task-base-postinstall.yml'

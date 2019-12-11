@@ -1,0 +1,27 @@
+---
+- name: "Ubuntu | Set facts"
+  set_fact:
+    cur_os: "{{ (ansible_distribution | lower) }}"
+    cur_os_ver: "{{ (ansible_distribution_major_version | lower) }}"
+
+- name: "Ubuntu | Install packages"
+  apt:
+    name: "{{ pkg.install_name }}"
+    state: "{{ pkg.state }}"
+    update_cache: true
+  loop_control:
+    loop_var: pkg
+  with_items: "{{ rs_au_packages }}"
+  when: cur_os == "ubuntu" and
+        (cur_os in pkg.os or "*" in pkg.os) and
+        (cur_os_ver in pkg.os_version or "*" in pkg.os_version)
+
+- name: "Ubuntu | Install audisp-json"
+  apt: 
+    deb: "{{ pkg.dest }}/{{ pkg.src }}"
+  loop_control:
+    loop_var: pkg
+  with_items: "{{ rs_au_direct_install }}"
+  when: cur_os == "ubuntu" and
+        (cur_os in pkg.os or "*" in pkg.os) and
+        (cur_os_ver in pkg.os_version or "*" in pkg.os_version)

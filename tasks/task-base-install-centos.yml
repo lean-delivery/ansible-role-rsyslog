@@ -1,0 +1,29 @@
+---
+- name: "CentOS | Set facts"
+  set_fact:
+    cur_os: "{{ (ansible_distribution | lower) }}"
+    cur_os_ver: "{{ (ansible_distribution_major_version | lower) }}"
+
+- name: "CentOS | Install packages"
+  yum:
+    name: "{{ pkg.install_name }}"
+    state: "{{ pkg.state }}"
+    allow_downgrade: false
+    update_cache: true
+  loop_control:
+    loop_var: pkg
+  with_items: "{{ rs_au_packages }}"
+  when: cur_os == "centos" and
+        (cur_os in pkg.os or "*" in pkg.os) and
+        (cur_os_ver in pkg.os_version or "*" in pkg.os_version)
+
+- name: "CentOS | Install audisp-json"
+  yum:
+    name: "{{ pkg.dest }}/{{ pkg.src }}"
+    state: present
+  loop_control:
+    loop_var: pkg
+  with_items: "{{ rs_au_direct_install }}"
+  when: cur_os == "centos" and
+        (cur_os in pkg.os or "*" in pkg.os) and
+        (cur_os_ver in pkg.os_version or "*" in pkg.os_version)

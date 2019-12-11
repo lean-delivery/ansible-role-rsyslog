@@ -1,0 +1,29 @@
+---
+- name: "Set facts"
+  set_fact:
+    cur_os: "{{ (ansible_distribution | lower) }}"
+    cur_os_ver: "{{ (ansible_distribution_major_version | lower) }}"
+
+- name: "Install | Copy installation package"
+  copy:
+    src: "{{ pkg.src }}"
+    dest: "{{ pkg.dest }}"
+  loop_control:
+    loop_var: pkg
+  with_items: "{{ rs_au_direct_install }}"
+  when: (cur_os in pkg.os or "*" in pkg.os) and
+        (cur_os_ver in pkg.os_version or "*" in pkg.os_version)
+
+- name: "Install | OS Distro Based Installation"
+  include: 'task-base-install-{{ cur_os }}.yml'
+
+- name: "Install | Enable services"
+  service:
+    name: "{{ pkg.daemon_name }}"
+    enabled: yes
+  loop_control:
+    loop_var: pkg
+  with_items: "{{ rs_au_packages }}"
+  when: pkg.isDaemon == True and
+        (cur_os in pkg.os or "*" in pkg.os) and
+        (cur_os_ver in pkg.os_version or "*" in pkg.os_version)
