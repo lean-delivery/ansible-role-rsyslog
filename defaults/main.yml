@@ -3,6 +3,12 @@
 yum_rsyslog_package:
   - yum-utils
   - rsyslog
+  - audit
+  - audispd_plugins
+  - firewalld
 
 apt_rsyslog_package:
-  - rsyslog  
+  - rsyslog
+  - auditd
+  - audispd_plugins
+  
