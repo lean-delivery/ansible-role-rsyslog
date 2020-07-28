@@ -1,2 +1,8 @@
 ---
 # defaults file for rsyslog
+yum_rsyslog_package:
+  - yum-utils
+  - rsyslog
+
+apt_rsyslog_package:
+  - rsyslog  

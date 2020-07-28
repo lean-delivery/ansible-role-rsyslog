@@ -1,2 +1,13 @@
 ---
-# tasks file for rsyslog
+- name: Include deploy for Debian systems
+  include: rsyslog_debian.yml
+  when: ansible_os_family == 'Debian'
+
+- name: Include deploy for RedHat systems
+  include: rsyslog_RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+- debug:
+    msg: "{{ this }}"
+  tags:
+    - test

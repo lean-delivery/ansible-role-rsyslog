@@ -1,0 +1,18 @@
+---
+- Add RSYSLOG Repo
+  apt_repository:
+    repo: ppa:adiscon/v8-stable
+    state: present
+    update_cache: true
+  become: true
+    
+- name: rsyslog Install package
+  apt:
+    name: "{{ apt_rsyslog_package }}"
+    state: present
+
+- name: rsyslog Enable and start servce
+  service:
+    name: rsyslogd
+    state: started
+    enabled: yes
