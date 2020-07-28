@@ -1,0 +1,16 @@
+---
+- name: Download RSYSLOG repo-file for CentOS
+  get_url:
+    src: http://rpms.adiscon.com/v8-stable/rsyslog.repo
+    dest: /etc/yum.repos.d/rsyslog.repo
+
+- name: RSYSLOG Install packages
+  yum:
+    name: "{{ yum_rsyslog_package }}"
+    state: present
+
+- name: RSYSLOG Enable and start service
+  service:
+    name: rsyslog
+    state: started
+    enabled: yes
