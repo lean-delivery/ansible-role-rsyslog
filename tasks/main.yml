@@ -4,7 +4,11 @@
   when: ansible_os_family == 'Debian'
 
 - name: Include deploy for RedHat systems
+<<<<<<< HEAD
   include: rsyslog_redhat.yml
+=======
+  include: rsyslog_RedHat.yml
+>>>>>>> 413803765515d52be9658ade3d222f4bdc49c46f
   when: ansible_os_family == 'RedHat'
 
 - debug:

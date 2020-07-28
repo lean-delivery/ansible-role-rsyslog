@@ -13,6 +13,10 @@
 
 - name: rsyslog Enable and start servce
   service:
+<<<<<<< HEAD
     name: rsyslog
+=======
+    name: rsyslogd
+>>>>>>> 413803765515d52be9658ade3d222f4bdc49c46f
     state: started
     enabled: yes
